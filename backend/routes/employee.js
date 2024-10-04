@@ -134,4 +134,15 @@ router.put('/employees/:id', upload.single('image'), async (req, res) => {
     }
 });
 
+// @route   GET /api/employees
+// @desc    Get all employees
+router.get('/employees', async (req, res) => {
+    try {
+        const employees = await Employee.find();
+        return res.status(200).json({ success: true, employees });
+    } catch (err) {
+        console.error(err.message);
+        return res.status(500).json({ success: false, message: 'Server error' });
+    }
+});
 module.exports = router;
