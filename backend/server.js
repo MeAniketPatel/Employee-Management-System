@@ -14,6 +14,8 @@ connectDB();
 // Middleware
 app.use(cors());
 app.use(express.json({ extended: false }));
+app.use('/uploads', express.static('uploads')); // Serve uploaded images
+app.use('/api', require('./routes/employee')); // Employee routes
 
 // Routes
 app.use('/api', require('./routes/auth'));
