@@ -101,10 +101,26 @@ const getAllEmployees = async (req, res) => {
         return res.status(500).json({ success: false, message: 'Server error' });
     }
 };
+const getEmployeesById = async (req, res) => {
+    try {
+        // Use req.params.id to get the employee ID from the request
+        const employee = await Employee.findById(req.params.id); // Use findById to get a single employee
+
+        if (!employee) {
+            return res.status(404).json({ success: false, message: 'Employee not found' });
+        }
+
+        return res.status(200).json({ success: true, employee }); // Return the employee data
+    } catch (err) {
+        console.error(err.message);
+        return res.status(500).json({ success: false, message: 'Server error' });
+    }
+};
 
 // Export functions
 module.exports = {
     createEmployee,
     updateEmployee,
-    getAllEmployees
+    getAllEmployees,
+    getEmployeesById
 };
