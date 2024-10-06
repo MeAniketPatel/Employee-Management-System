@@ -12,6 +12,8 @@ const CreateEmployee = () => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [loading, setLoading] = useState(false);
+    // Define a new state for managing the key of the file input
+    const [imageKey, setImageKey] = useState(Date.now());
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
@@ -53,6 +55,8 @@ const CreateEmployee = () => {
             setGender('Male');
             setCourses([]);
             setFile(null);
+            // To reset the file input, we can force a re-render by creating a new state
+            setImageKey(Date.now()); // Add this line to force the reset of the input
         } catch (err) {
             setError('Failed to create employee');
             console.error('Error creating employee:', err);
@@ -167,6 +171,7 @@ const CreateEmployee = () => {
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2">Profile Image</label>
                     <input
+                        key={imageKey} // This will force the input to remount and clear the file
                         type="file"
                         accept="image/jpeg, image/png"
                         onChange={handleFileChange}

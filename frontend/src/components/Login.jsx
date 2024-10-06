@@ -26,7 +26,7 @@ const Login = () => {
             localStorage.setItem('token', response.data.token); // Adjust as per your backend
 
             // Navigate to the dashboard after successful login
-            // navigate('/dashboard');
+            navigate('/dashboard');
 
             // Handle successful login, e.g., save token to localStorage or redirect
         } catch (err) {

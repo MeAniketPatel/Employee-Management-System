@@ -12,12 +12,19 @@ const PrivateRoute = ({ children }) => {
 
   return token ? children : <Navigate to="/login" />;
 };
+const DefaultRoute = ({ children }) => {
+  const token = localStorage.getItem('token');
+  console.log(token);
+
+  return token ? <Navigate to="/dashboard" /> : children;
+
+}
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<DefaultRoute><Login /></DefaultRoute>} />
 
         {/* Private Routes */}
         <Route

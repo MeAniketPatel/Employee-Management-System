@@ -41,7 +41,13 @@ const EditEmployee = () => {
     }, [id]);
 
     const handleFileChange = (e) => {
-        setFile(e.target.files[0]);
+        const selectedFile = e.target.files[0];
+        if (selectedFile && (selectedFile.type === 'image/jpeg' || selectedFile.type === 'image/png')) {
+            setFile(selectedFile);
+        } else {
+            setError('Only JPG and PNG files are allowed.');
+            setFile(null);
+        }
     };
 
     const handleCoursesChange = (course) => {
@@ -51,12 +57,44 @@ const EditEmployee = () => {
             setCourses([...courses, course]);
         }
     };
+    const validateEmail = async (email) => {
+        try {
+            const response = await axios.get(`http://localhost:3000/api/employees?email=${email}`);
+            return response.data.exists; // Assuming the API returns { exists: true/false }
+        } catch (error) {
+            console.error('Error checking email:', error);
+            return false; // Return false if there's an error
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setError('');
         setSuccess('');
+        // Validate Email Format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            setError('Invalid email format');
+            setLoading(false);
+            return;
+        }
+
+        // Validate Duplicate Email
+        const emailExists = await validateEmail(email);
+        if (emailExists) {
+            setError('Email already in use.');
+            setLoading(false);
+            return;
+        }
+
+        // Validate Mobile Number
+        const mobileRegex = /^[0-9]+$/; // only digits
+        if (!mobileRegex.test(mobileNo)) {
+            setError('Mobile number must be numeric.');
+            setLoading(false);
+            return;
+        }
 
         const formData = new FormData();
         formData.append('name', name);
@@ -75,7 +113,10 @@ const EditEmployee = () => {
             });
 
             setSuccess('Employee updated successfully');
-            navigate('/employee-list'); // Redirect after saving
+            // Redirect after a short delay
+            setTimeout(() => {
+                navigate('/employees'); // Redirect after saving
+            }, 1000); // Delay of 2 seconds (2000 milliseconds)
         } catch (err) {
             setError('Failed to update employee');
             console.error('Error updating employee:', err);
@@ -210,7 +251,7 @@ const EditEmployee = () => {
                         disabled={loading}
                         className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
-                        {loading ? 'Submitting...' : 'Save Changes'}
+                        {loading ? 'Updating...' : 'Update'}
                     </button>
                 </div>
             </form>
