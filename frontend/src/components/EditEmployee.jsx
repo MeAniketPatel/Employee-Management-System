@@ -97,6 +97,14 @@ const EditEmployee = () => {
             return;
         }
 
+        // Validate Mobile Number Length
+        if (mobileNo.length < 10) {
+            setError('Please Enter Valid Number');
+            setLoading(false);
+            return;
+
+        }
+
         const formData = new FormData();
         formData.append('name', name);
         formData.append('email', email);
