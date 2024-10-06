@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ReactPaginate from 'react-paginate'; // Import ReactPaginate
+import Navbar from './navBar';
 
 const EmployeeList = () => {
     const [employees, setEmployees] = useState([]);
@@ -94,7 +95,8 @@ const EmployeeList = () => {
         setCurrentPage(selected);
     };
 
-    return (
+    return (<>
+        <Navbar />
         <div className="container mx-auto py-10">
             <h1 className="text-3xl font-bold mb-6 text-center">Employee List</h1>
 
@@ -193,6 +195,7 @@ const EmployeeList = () => {
                 pageRangeDisplayed={5}
             />
         </div>
+    </>
     );
 };
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import Navbar from './navBar';
 
 const EditEmployee = () => {
     const { id } = useParams(); // Get the employee ID from the URL
@@ -129,7 +130,8 @@ const EditEmployee = () => {
         return <div>Loading...</div>;
     }
 
-    return (
+    return (<>
+        <Navbar />
         <div className="container mx-auto py-10">
             <h1 className="text-3xl font-bold mb-6 text-center">Edit Employee</h1>
             <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
@@ -256,6 +258,7 @@ const EditEmployee = () => {
                 </div>
             </form>
         </div>
+    </>
     );
 };
 

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import Navbar from './navBar';
 
 const CreateEmployee = () => {
     const [name, setName] = useState('');
@@ -65,7 +66,8 @@ const CreateEmployee = () => {
         }
     };
 
-    return (
+    return (<>
+        <Navbar />
         <div className="container mx-auto py-10">
             <h1 className="text-3xl font-bold mb-6 text-center">Create New Employee</h1>
             <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
@@ -194,6 +196,7 @@ const CreateEmployee = () => {
                 </div>
             </form>
         </div>
+    </>
     );
 };
 
