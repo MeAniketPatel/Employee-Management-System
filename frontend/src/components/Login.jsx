@@ -5,9 +5,10 @@ import { useNavigate } from 'react-router-dom';
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate(); // Initialize useNavigate
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -21,15 +22,11 @@ const Login = () => {
             });
 
             // Assuming successful login returns a token or user data
-            console.log('Login successful', response.data);
-            // Store token or user data in localStorage (for session management)
-            localStorage.setItem('token', response.data.token); // Adjust as per your backend
-            localStorage.setItem('username', response.data.username); // Adjust as per your backend
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('username', response.data.username);
 
             // Navigate to the dashboard after successful login
             navigate('/dashboard');
-
-            // Handle successful login, e.g., save token to localStorage or redirect
         } catch (err) {
             setError('Invalid username or password');
             console.error('Error:', err);
@@ -61,13 +58,24 @@ const Login = () => {
                             Password
                         </label>
                         <input
-                            type="password"
+                            type={showPassword ? 'text' : 'password'} // Toggle between 'text' and 'password'
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="Enter your password"
                         />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2">
+                            <input
+                                type="checkbox"
+                                checked={showPassword}
+                                onChange={() => setShowPassword(!showPassword)} // Toggle the showPassword state
+                                className="mr-2 leading-tight"
+                            />
+                            Show Password
+                        </label>
                     </div>
 
                     {error && (
