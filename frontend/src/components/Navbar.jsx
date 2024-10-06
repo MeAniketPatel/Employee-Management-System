@@ -22,7 +22,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="bg-gray-800 text-white py-4 px-8">
+        <nav className="bg-gray-800 text-white py-4 px-8 static">
             <div className="container mx-auto flex justify-between items-center">
                 <div className="text-xl font-bold">
                     <Link to="/dashboard" className="hover:text-gray-400">Admin Panel</Link>

@@ -33,7 +33,7 @@ const login = async (req, res) => {
             { expiresIn: '1h' },
             (err, token) => {
                 if (err) throw err;
-                res.json({ success: true, token });
+                res.json({ success: true, token, username });
             }
         );
     } catch (err) {

@@ -24,6 +24,7 @@ const Login = () => {
             console.log('Login successful', response.data);
             // Store token or user data in localStorage (for session management)
             localStorage.setItem('token', response.data.token); // Adjust as per your backend
+            localStorage.setItem('username', response.data.username); // Adjust as per your backend
 
             // Navigate to the dashboard after successful login
             navigate('/dashboard');

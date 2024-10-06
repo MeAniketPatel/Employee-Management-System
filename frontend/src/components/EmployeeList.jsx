@@ -82,7 +82,7 @@ const EmployeeList = () => {
         return <div className="text-red-500">{error}</div>;
     }
 
-    const employeesPerPage = 10;
+    const employeesPerPage = 5;
 
     // Paginate the sorted employees
     const displayedEmployees = sortedEmployees.slice(
@@ -96,8 +96,9 @@ const EmployeeList = () => {
     };
 
     return (<>
-        <Navbar />
-        <div className="container mx-auto py-10">
+        <Navbar className='static' />
+        <div className="container mx-auto py-10 mt-16 overflow-x-hidden"> {/* Added overflow-x-hidden */}
+            {/* <div className="container mx-auto py-10"> */}
             <h1 className="text-3xl font-bold mb-6 text-center">Employee List</h1>
 
             {/* Search Input */}
