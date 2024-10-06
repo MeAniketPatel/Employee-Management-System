@@ -8,6 +8,7 @@ const EditEmployee = () => {
     const navigate = useNavigate(); // For navigation after saving
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [originalEmail, setOriginalEmail] = useState(''); // Store original email separately
     const [mobileNo, setMobileNo] = useState('');
     const [designation, setDesignation] = useState('');
     const [gender, setGender] = useState('Male'); // default value
@@ -26,6 +27,7 @@ const EditEmployee = () => {
 
                 setName(employee.name);
                 setEmail(employee.email);
+                setOriginalEmail(employee.email); // Set original email
                 setMobileNo(employee.mobileNo);
                 setDesignation(employee.designation);
                 setGender(employee.gender);
@@ -58,13 +60,14 @@ const EditEmployee = () => {
             setCourses([...courses, course]);
         }
     };
+
     const validateEmail = async (email) => {
         try {
             const response = await axios.get(`http://localhost:3000/api/employees`);
-            const employees = response.data.employees; // Assuming the API returns an array of employees
+            const employees = response.data.employees;
 
-            // Check if any employee has the same email as the entered one
-            const emailExists = employees.some(employee => employee.email === email);
+            // Exclude current employee from email uniqueness check
+            const emailExists = employees.some(employee => employee.email === email && employee._id !== id);
 
             return emailExists; // Return true if email exists, false otherwise
         } catch (error) {
@@ -72,7 +75,7 @@ const EditEmployee = () => {
             return false; // Return false if there's an error
         }
     };
-    const originalEmail = email;
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -88,7 +91,7 @@ const EditEmployee = () => {
         }
 
         // Check if the email has been changed
-        if (email !== originalEmail) { // `originalEmail` is the employee's email from the database (useEffect)
+        if (email !== originalEmail) {
             // Validate Duplicate Email
             const emailExists = await validateEmail(email);
             if (emailExists) {
@@ -133,7 +136,7 @@ const EditEmployee = () => {
             // Redirect after a short delay
             setTimeout(() => {
                 navigate('/employees'); // Redirect after saving
-            }, 1000); // Delay of 1 second (1000 milliseconds)
+            }, 1000);
         } catch (err) {
             setError('Failed to update employee');
             console.error('Error updating employee:', err);
@@ -141,7 +144,6 @@ const EditEmployee = () => {
             setLoading(false);
         }
     };
-
 
     if (loadingData) {
         return <div className="text-center py-10">Loading...</div>;
@@ -153,6 +155,7 @@ const EditEmployee = () => {
             <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
                 <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Edit Employee</h1>
                 <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 max-w-lg mx-auto">
+
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2">Name</label>
                         <input
@@ -258,6 +261,7 @@ const EditEmployee = () => {
                             {loading ? 'Updating...' : 'Update'}
                         </button>
                     </div>
+
                 </form>
             </div>
         </>

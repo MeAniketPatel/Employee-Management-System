@@ -74,7 +74,8 @@ This system is built using the **MERN stack** (MongoDB, Express, React, Node.js)
 
    ```bash
    git clone https://github.com/MeAniketPatel/Employee-Management-System.git
-   cd employee-management-system
+   cd Employee-Management-System
+   cd backend
    ```
 
 2. Install dependencies:
