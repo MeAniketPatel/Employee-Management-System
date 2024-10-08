@@ -6,6 +6,13 @@ The **Employee Management System** is a web application designed for managing em
 
 This system is built using the **MERN stack** (MongoDB, Express, React, Node.js) and integrates Cloudinary for image storage. The frontend is styled with **Tailwind CSS**.
 
+## Live Demo
+[Click here to view the live demo](https://employee-managment-system-mern.netlify.app)
+
+### Login Credentials for Testing:
+- **username:** admin
+- **password:** 12345
+
 ## Features
 
 - **Admin Login:**
